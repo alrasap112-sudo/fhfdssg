@@ -4,8 +4,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 
 import java.io.IOException;
@@ -106,9 +104,8 @@ public final class TradeManager {
 			.append(Component.literal(" "))
 			.append(Msg.button("Details", ChatFormatting.AQUA, "/cash offers", "Open the incoming offers panel"));
 		seller.sendSystemMessage(msg);
-		seller.displayClientMessage(Component.literal("Trade offer from " + o.buyerName + " - " + Money.format(o.price))
-			.withStyle(ChatFormatting.GOLD), true);
-		seller.playNotifySound(SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1.0f, 1.0f);
+		seller.sendOverlayMessage(Component.literal("Trade offer from " + o.buyerName + " - " + Money.format(o.price))
+			.withStyle(ChatFormatting.GOLD));
 	}
 
 	// ---------------------------------------------------------------- resolve
@@ -192,8 +189,6 @@ public final class TradeManager {
 			+ ". Balance: " + Money.format(store.balance(o.buyer))));
 		seller.sendSystemMessage(Msg.ok("Sale complete: " + o.quantity + "x " + o.itemName + " to " + o.buyerName + " for "
 			+ Money.format(o.price) + ". Balance: " + Money.format(store.balance(o.seller))));
-		buyer.playNotifySound(SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1.0f, 1.2f);
-		seller.playNotifySound(SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1.0f, 1.2f);
 		return Result.ok("Trade completed.");
 	}
 
@@ -211,7 +206,6 @@ public final class TradeManager {
 	private void failNotice(Offer o, ServerPlayer buyer, ServerPlayer seller, String why) {
 		buyer.sendSystemMessage(Msg.err("Your offer for " + o.quantity + "x " + o.itemName + " failed: " + why));
 		seller.sendSystemMessage(Msg.err("Offer from " + o.buyerName + " failed: " + why));
-		buyer.playNotifySound(SoundEvents.VILLAGER_NO, SoundSource.PLAYERS, 1.0f, 1.0f);
 	}
 
 	// ---------------------------------------------------------------- lifecycle
