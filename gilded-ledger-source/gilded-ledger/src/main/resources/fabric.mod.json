@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "gildedledger",
+  "version": "${version}",
+  "name": "Gilded Ledger",
+  "description": "Persistent $5,000 cash economy with secure, server-authoritative player-to-player item trading.",
+  "authors": ["Gilded Ledger contributors"],
+  "license": "MIT",
+  "icon": "assets/gildedledger/icon.png",
+  "environment": "*",
+  "entrypoints": { "main": ["net.gildedledger.GildedLedger"] },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}
